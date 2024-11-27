@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+{% load static %}
+    <style>
+          header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 50px;
+            width: 100%;
+        }
+        .col {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            max-width: 300px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+        .col:hover {
+            transform: scale(1.05);
+        }
+        .col img {
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+        }
+        .col h2 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .col p {
+            color: #555;
+            margin: 10px 0;
+        }
+        .price {
+            font-weight: bold;
+            color: #333;
+        }
+        .buy-btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .buy-btn:hover {
+            background-color: #218838;
+        }
+        
+        @media (max-width: 768px) {
+            .card {
+                max-width: 45%;
+            }
+        }
+        @media (max-width: 480px) {
+            .card {
+                max-width: 100%;
+            }
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 30px;
+        }
+
+        nav ul {
+                width: 100%;
+                text-align: center;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid #444;
+            }
+
+            nav ul li a {
+                display: block;
+                width: 100%;
+                padding: 15px 0;
+            }
+
+    </style>
+</head>
+<body style="background-color: #aea9a9;">
+    <header>
+        <h1>Shoe Cart</h1>
+    </header>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark" style="padding: 30px;">
+        <a class="navbar-brand" href=""> Men shoes </a>
+        <input class="form-control" type="text" placeholder="search shoes..." style="width: 150px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#togg">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        
+
+        <div class="collapse navbar-collapse" id="togg">
+            <ul class="navbar-nav" style="padding-left: 300px;">
+                
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'customerhome' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Categories</a>
+                    <div class="dropdown-menu">
+                        {% for i in category %}
+                        <a class="dropdown-item" href=>{{i.cat}}</a>
+                        {% endfor %}
+                    </div></li>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'edit_user' %}">Edit profile</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" href="">Cart</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'logoutfun' %}">Logout</a>
+                </li>
+
+            </ul> 
+        </div>
+    </nav>
+
+    </div>
+    <img src="{% static 'image/img25.PNG' %}" alt="" height="200px" width="100%" >
+    <div class="container" style="background-color: #aea9a9;">
+        
+           <div class="name"> <h1>Casual Shoes</h1></div>
+       
+        <div class="row">
+            
+            <div class="col">
+                <img src="{% static 'image/img10.webp' %}" alt="Shoe 1">
+                <h2>Running Shoes</h2>
+                <p class="price">$79.99</p>
+                <p>Lightweight and comfortable running shoes.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img11.webp' %}" alt="Shoe 2">
+                <h2>Casual Sneakers</h2>
+                <p class="price">$59.99</p>
+                <p>Perfect sneakers for everyday wear.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img12.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img14.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <img src="{% static 'image/img15.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img17.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img18.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img19.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+        </div>
+        <h1>Sports Shoes</h1>
+        <div class="row">
+            <div class="col">
+                <img src="{% static 'image/img20.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img21.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img12.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img15.webp' %}" alt="Shoe 4">
+                <h2>Sports Shoes</h2>
+                <p class="price">$99.99</p>
+                <p>High-performance shoes for all kinds of sports.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col">
+                <img src="{% static 'image/img10.webp' %}" alt="Shoe 1">
+                <h2>Running Shoes</h2>
+                <p class="price">$79.99</p>
+                <p>Lightweight and comfortable running shoes.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img11.webp' %}" alt="Shoe 2">
+                <h2>Casual Sneakers</h2>
+                <p class="price">$59.99</p>
+                <p>Perfect sneakers for everyday wear.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img12.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img14.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+        </div>
+        <h1>Sneakers</h1>
+        <div class="row">
+            
+            <div class="col">
+                <img src="{% static 'image/img10.webp' %}" alt="Shoe 1">
+                <h2>Running Shoes</h2>
+                <p class="price">$79.99</p>
+                <p>Lightweight and comfortable running shoes.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img11.webp' %}" alt="Shoe 2">
+                <h2>Casual Sneakers</h2>
+                <p class="price">$59.99</p>
+                <p>Perfect sneakers for everyday wear.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img12.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img14.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+        </div> <div class="row">
+            
+            <div class="col">
+                <img src="{% static 'image/img10.webp' %}" alt="Shoe 1">
+                <h2>Running Shoes</h2>
+                <p class="price">$79.99</p>
+                <p>Lightweight and comfortable running shoes.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img11.webp' %}" alt="Shoe 2">
+                <h2>Casual Sneakers</h2>
+                <p class="price">$59.99</p>
+                <p>Perfect sneakers for everyday wear.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img12.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+            <div class="col">
+                <img src="{% static 'image/img14.webp' %}" alt="Shoe 3">
+                <h2>Formal Leather Shoes</h2>
+                <p class="price">$120.00</p>
+                <p>Premium leather shoes for formal occasions.</p>
+                <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Shoe Cart. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+{% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f7f7f7;
+        }
+
+        .con {
+
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f7f7f7;
+
+        }
+        .registration-container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .registration-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .registration-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+        }
+        .registration-container select {
+            width: calc(100% - 0px);
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+        }
+        .registration-container button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 15px auto;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .registration-container button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body style="background-color: #9a9a9a;">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark" style="padding: 30px;">
+        <a class="navbar-brand" href=""> SHOES CART <img src="{% static 'image/sho.png' %}" alt="Running Shoe" width="60"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#togg">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+
+        <div class="collapse navbar-collapse" id="togg">
+            <ul class="navbar-nav" style="padding-left: 150px;">
+                
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'customerhome' %}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-toggle="dropdown">
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <a class="dropdown-item" href="{% url 'category_page' category.id %}">{{ category.categoryname }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'edituser' %}">Edit profile</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'cart' %}">Cart  <span class="badge badge-pill badge-primary">{{ cart_count }}</span></a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'logoutfun' %}">Logout</a>
+                </li>
+                
+            </ul> 
+        </div>
+    </nav>
+
+<div class="con">
+    <div class="registration-container">
+   
+        <h2>Update details</h2>
+        <form action="{% url 'edituser' ur.id  %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="number"  id="age" name="age" placeholder="Age" value="{{ur.age}}" required>
+            <input type="number"  id="ph" name="ph" placeholder="Phone no" value="{{ur.phone}}" required>
+            <input type="text"  id="add" name="add" placeholder="Address" value="{{ur.address}}" required>
+            
+            
+            <label for="price">upload image:</label>
+                <img src="{{ ur.images.url }}" alt="" width="100" height="100">
+                <input type="file" class="form-control" id="img" name="img" >
+    
+            <button type="update">update</button>
+        </form>
+        {% for msg in messages %}
+        <h6>
+          <div class="alert alert-danger mt-3" >
+            {{ msg }}
+          </div>
+        </h6>
+        {% endfor %}
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Shoe Cart. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

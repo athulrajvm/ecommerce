@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% load static %}
+    <style>
+            body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #343a40;
+        }
+        .cart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .container {
+        flex: 1; 
+    }
+        .cart-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            max-width: 250px;
+            transition: box-shadow 0.3s ease;
+        }
+        .cart-item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .cart-item img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .cart-details h4 {
+            font-size: 18px;
+            color: #343a40;
+            margin-bottom: 5px;
+        }
+        .cart-details h6 {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 16px;
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .quantity-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .quantity-control button {
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .quantity-control button:hover {
+            background-color: #0056b3;
+        }
+        .quantity-control span {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        .delete-btn {
+            display: inline-block;
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        @media (max-width: 576px) {
+            .cart-item {
+                width: 100%;
+            }
+        }
+    .total-price-container {
+    background-color: #f8f9fa; 
+    padding: 15px; 
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    max-width: 400px; 
+    margin: 0 auto; 
+    text-align: center;
+    padding-right: 100px;
+}
+
+
+.total-price-container h3 {
+    font-size: 24px; 
+    color: #28a745; 
+    font-weight: bold; 
+    margin: 0; 
+}
+
+
+.total-price-container span {
+    font-size: 24px; 
+    font-weight: bold; 
+    margin: 0;
+}
+
+
+@media (max-width: 576px) {
+    .total-price-container {
+        max-width: 100%; 
+        
+    }
+
+    .total-price-container h3 {
+        font-size: 20px; 
+    }
+
+    .total-price-container span {
+        font-size: 22px; /
+    }
+}
+    footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 30px;
+            max-height: 80px;
+            }
+        
+    </style>
+</head>
+<body style="background-color: #b4b7b9;">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark" style="padding: 20px;">
+        <a class="navbar-brand" href=""> SHOES CART <img src="{% static 'image/sho.png' %}" alt="Running Shoe" width="60"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#togg">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+
+        <div class="collapse navbar-collapse" id="togg">
+            <ul class="navbar-nav" style="padding-left: 150px;">
+                
+                <li class="nav-item" style="padding-right: 50px;">
+                    <a class="nav-link" href="{% url 'customerhome' %}">Home</a>
+                </li>
+                <li class="nav-item dropdown" style="padding-right: 50px;">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-toggle="dropdown">
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <a class="dropdown-item" href="{% url 'category_page' category.id %}">{{ category.categoryname }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                </li>
+                <li class="nav-item" style="padding-right: 50px;">
+                    <a class="nav-link" href="{% url 'edituser' %}">Edit profile</a>
+                </li>
+                <li class="nav-item" style="padding-right: 50px;">
+                    <a class="nav-link" href="{% url 'cart' %}">Cart  <span class="badge badge-pill badge-primary">{{ cart_count }}</span></a>
+                </li>
+                <li class="nav-item" style="padding-right: 50px;">
+                    <a class="nav-link" href="{% url 'logoutfun' %}">Logout</a>
+                </li>
+                
+            </ul> 
+        </div>
+    </nav>
+    <h1>Your Cart</h1>
+    <div class="container cart-container">
+        {% for item in cart_items %}
+        <div class="cart-item" data-item-id="{{ item.id }}">
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+            <div class="cart-details">
+                <h4>{{ item.product.productname }}</h4>
+                <h6>{{ item.product.description }}</h6>
+                <p class="price">$<span>{{ item.total_price }}</span></p>
+                <div class="quantity-control">
+                    <button class="decrease-qty">-</button>
+                    <span class="quantity">{{ item.quantity }}</span>
+                    <button class="increase-qty">+</button>
+                </div>
+            </div>
+            <a href="{% url 'remove_from_cart' item.id %}" class="delete-btn">Delete</a>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="container mt-4">
+        <div class="total-price-container text-right">
+            <h3>Total Price: $<span id="total-price">{{ total_price }}</span></h3>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            function updateTotalPrice() {
+                let totalPrice = 0;
+                $(".cart-item").each(function() {
+                    const itemTotalPrice = parseFloat($(this).find(".price span").text());
+                    totalPrice += itemTotalPrice;
+                });
+                $("#total-price").text(totalPrice.toFixed(2)); 
+            }
+
+            $(".increase-qty").click(function () {
+                const cartItem = $(this).closest(".cart-item");
+                const itemId = cartItem.data("item-id");
+                updateQuantity(itemId, "increase", cartItem);
+            });
+
+            // Decrease quantity
+            $(".decrease-qty").click(function () {
+                const cartItem = $(this).closest(".cart-item");
+                const itemId = cartItem.data("item-id");
+                updateQuantity(itemId, "decrease", cartItem);
+            });
+
+            // Update quantity via AJAX
+            function updateQuantity(itemId, action, cartItem) {
+                $.ajax({
+                    url: `/cart/update_quantity/${itemId}/`,
+                    type: "POST",
+                    data: {
+                        action: action,
+                        csrfmiddlewaretoken: "{{ csrf_token }}"
+                    },
+                    success: function (data) {
+                        cartItem.find(".quantity").text(data.quantity);
+                        cartItem.find(".price span").text(data.total_price.toFixed(2));
+                        updateTotalPrice(); // Recalculate the total price
+                    },
+                    error: function () {
+                        alert("Failed to update quantity.");
+                    }
+                });
+            }
+        });
+    </script>
+    <footer>
+        <p>&copy; 2024 Shoe Cart. All rights reserved.</p>
+    <footer>
+</body>
+</html>
+
